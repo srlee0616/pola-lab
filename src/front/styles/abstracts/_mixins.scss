@@ -1,0 +1,241 @@
+@use 'variables' as *;
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:color';
+
+// BREAKPOINT
+@mixin respond($key) {
+    $value: map.get($bp, $key);
+
+    @if $value == null {
+        @error 'Unknown breakpoint: #{$key}';
+    }
+
+    @media (max-width: $value) {
+        @content;
+    }
+}
+
+
+// LAYOUT
+@mixin flex(
+    $ai: center,
+    $jc: flex-start,
+    $fd: row,
+    $fw: nowrap,
+    $gap: null,
+    $equal: false
+) {
+    display: flex;
+    align-items: $ai;
+    justify-content: $jc;
+    flex-direction: $fd;
+    flex-wrap: $fw;
+
+    $col-gap: null;
+
+    @if $gap != null {
+        gap: $gap;
+
+        @if meta.type-of($gap) == 'list' {
+            $col-gap: list.nth($gap, 2);
+        } @else {
+            $col-gap: $gap;
+        }
+    }
+
+    @if $equal == true {
+        > * {
+            flex: 1 1 0;
+        }
+    }
+
+    @else if meta.type-of($equal) == 'number' and math.is-unitless($equal) {
+
+        @if $col-gap == null {
+            @warn "n개 기준 사용 시 gap을 함께 지정하는 걸 권장합니다.";
+            $col-gap: 0;
+        }
+
+        > * {
+            flex: 0 0 calc((100% - (#{$equal - 1} * #{$col-gap})) / #{$equal});
+            max-width: calc((100% - (#{$equal - 1} * #{$col-gap})) / #{$equal});
+        }
+    }
+
+    @else if $equal != false {
+        > * {
+            flex: 0 0 $equal;
+            max-width: $equal;
+        }
+    }
+}
+
+@mixin grid(
+    $cols: null,
+    $rows: null,
+    $ai: stretch,
+    $jc: stretch,
+    $gap: null
+) {
+    display: grid;
+
+    @if $cols != null {
+        grid-template-columns: $cols;
+    }
+
+    @if $rows != null {
+        grid-template-rows: $rows;
+    }
+
+    align-items: $ai;
+    justify-content: $jc;
+
+    @if $gap != null {
+        gap: $gap;
+    }
+}
+
+// TEXT
+@mixin ellipsis($line-height: map.get($lh, base), $lines: 1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @if $lines == 1 {
+        white-space: nowrap;
+    } @else {
+        display: -webkit-box;
+        -webkit-line-clamp: $lines;
+        -webkit-box-orient: vertical;
+        line-height: #{$line-height}em;
+        max-height: #{$line-height * $lines}em;
+    }
+}
+
+// TYPOGRAPHY
+@mixin font($family, $size, $weight: 400, $line: base, $letter: base) {
+    font-family: map.get($ff, $family);
+    font-size: map.get($fs, $size);
+    line-height: map.get($lh, $line);
+    font-weight: $weight;
+    letter-spacing: map.get($ls, $letter);
+}
+
+// HOVER
+@mixin link-hover($group, $key: null, $amount: 10%) {
+    @if $key == null {
+        color: map.get($c, $group);
+
+        &:hover {
+            color: color.adjust(map.get($c, $group), $lightness: -$amount);
+        }
+    } @else {
+        color: map.get(map.get($c, $group), $key);
+
+        &:hover {
+            color: color.adjust(
+                map.get(map.get($c, $group), $key),
+                $lightness: -$amount
+            );
+        }
+    }
+}
+
+@mixin bg-hover($group, $key: null, $amount: 10%) {
+    @if $key == null {
+        background-color: map.get($c, $group);
+
+        &:hover {
+            background-color: color.adjust(
+                map.get($c, $group),
+                $lightness: -$amount
+            );
+        }
+    } @else {
+        background-color: map.get(map.get($c, $group), $key);
+
+        &:hover {
+            background-color: color.adjust(
+                map.get(map.get($c, $group), $key),
+                $lightness: -$amount
+            );
+        }
+    }
+}
+
+// POSITION
+@mixin position($p: absolute, $t: null, $l: null, $b: null, $r: null) {
+    position: $p;
+
+    @if $t != null { top: $t; }
+    @if $l != null { left: $l; }
+    @if $b != null { bottom: $b; }
+    @if $r != null { right: $r; }
+}
+
+@mixin center($axis: both) {
+    @if $axis == x {
+        left: 50%;
+        transform: translateX(-50%);
+    } @else if $axis == y {
+        top: 50%;
+        transform: translateY(-50%);
+    } @else {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+// VISIBILITY
+@mixin visibility($state, $layer: null) {
+    @if $state == hidden {
+        visibility: hidden;
+        opacity: 0;
+        z-index: map.get($z, behind);
+    } @else {
+        visibility: visible;
+        opacity: 1;
+
+        @if $layer != null {
+        z-index: map.get($z, $layer);
+        }
+    }
+}
+
+// ANIMATION
+@mixin transition($p: all, $t: .3s, $e: ease, $d: 0s) {
+    transition: $p $t $e $d;
+}
+
+@mixin fade-in($t: .6s, $e: ease, $d: 0s) {
+    animation: fade-in $t $e $d both;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+// SCROLLBAR
+@mixin scrollbar(
+    $width: 8px,
+    $thumb: map.get($c, primary),
+    $track: map.get(map.get($c, gray), 100),
+    $radius: map.get($radius, sm)
+) {
+    &::-webkit-scrollbar {
+        width: $width;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $thumb;
+        border-radius: $radius;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: $track;
+    }
+}

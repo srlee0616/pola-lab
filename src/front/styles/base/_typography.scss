@@ -1,0 +1,21 @@
+@use '../abstracts/index' as *;
+
+body {
+    font-family: ff(base);
+    font-size: fs(base);
+    line-height: lh(base);
+    color: c(black);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 900;
+    line-height: lh(title);
+    letter-spacing: ls(title);
+}
+
+.logo {
+    font-weight: 900;
+    letter-spacing: ls(title);
+    text-transform: uppercase;
+}

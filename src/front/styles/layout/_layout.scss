@@ -1,0 +1,15 @@
+@use '../abstracts/index' as *;
+
+main {
+    min-height: 100dvh;
+}
+
+.layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout-main {
+    flex: 1;
+}

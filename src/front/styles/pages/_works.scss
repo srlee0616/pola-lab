@@ -1,0 +1,371 @@
+@use '../abstracts/index' as *;
+
+.works {
+    padding: spacing(24) spacing(6);
+    
+    &-filter {
+        position: relative;
+        &__button {
+            padding: spacing(2) spacing(6);
+            border: 1px solid currentColor;
+            cursor: pointer;
+            @include font(accent, sm, 600, base, label);
+            @include transition;
+        }
+
+        &__panel {
+            @include position($t: calc(100% + 16px), $r: 0);
+            width: 280px;
+            padding: spacing(8);
+            @include flex($ai: flex-start, $fd: column, $gap: spacing(4));
+            background-color: c-opacity(white, 0.8);
+            backdrop-filter: blur(24px);
+            border: 1px solid c(gray, 100);
+            opacity: 0;
+            transform: translateY(24px);
+            pointer-events: none;
+            transition: opacity .5s ease, transform .5s ease;
+
+            &.is-open {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+        }
+
+        &__item {
+            @include flex($ai: flex-start, $gap: spacing(4));
+            width: 100%;
+            cursor: pointer;
+        }
+
+        &__check {
+            @include flex($jc: center);
+            width: 16px;
+            height: 16px;
+            border: 1px solid c(primary);
+
+            svg {
+                color: c(white);
+            }
+
+            &.is-active {
+                background: c(primary);
+                border-color: c(primary);
+            }
+        }
+
+        &__label {
+            text-align: left;
+            @include font(accent, sm);
+            opacity: .7;
+            transition: opacity .3s ease;
+            color: c(primary);
+
+            .works-filter__item:hover & {
+                opacity: 1;
+            }
+        }
+    }
+
+    &-grid {
+        column-count: 3;
+        column-gap: spacing(3);
+
+        &__item {
+            position: relative;
+            margin-bottom: spacing(3);
+            break-inside: avoid;
+            cursor: pointer;
+            overflow: hidden;
+            background: c(gray,100);
+            opacity: 0;
+            transform: translateY(24px);
+            animation: worksReveal .6s ease forwards;
+            
+            @for $i from 1 through 3 {
+                &:nth-child(#{$i}) {
+                    animation-delay: $i * .05s;
+                }
+            }
+
+            &:hover {
+                img {
+                    transform: scale(1.03);
+                }
+
+                .works-grid__overlay {
+                    opacity: 1;
+                }
+
+                .works-grid__title-en,
+                .works-grid__title {
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        &__image {
+            img {
+                width: 100%;
+                display: block;
+                object-fit: cover;
+                @include transition(transform, .7s, ease);
+            }
+        }
+
+        &__overlay {
+            @include position();
+            inset: 0;
+            @include flex($fd: column, $jc: center, $ai: flex-start);
+            padding: spacing(10);
+            background: c-opacity(gray, 900, 0.7);
+            backdrop-filter: blur(2px);
+            opacity: 0;
+            @include transition(opacity, .5s, ease);
+        }
+
+        &__title-en {
+            @include font(accent, 2xl, 500);
+            color: c(white);
+            margin-bottom: spacing(2);
+            transform: translateY(16px);
+            @include transition(transform, .5s, ease);
+            text-transform: capitalize;
+        }
+
+        &__title {
+            @include font(body, lg, 300);
+            color: c(white);
+            transform: translateY(16px);
+            @include transition(transform, .5s, ease, .1s);
+        }
+    }
+
+    &-hero {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+
+        &__image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        &__overlay {
+            @include position($b: 0);
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                c-opacity(gray, 900, 0.4),
+                c-opacity(gray, 900, 0)
+            );
+        }
+
+        &__info {
+            @include position($b: 0, $l: 0, $r: 0);
+            @include flex($jc: space-between);
+            padding: spacing(6) spacing(8);
+            color: c(white);
+            backdrop-filter: blur(2px);
+            background-color: c-opacity(gray, 900, 0.2);
+            border-top: 1px solid c-opacity(gray, 100, 0.2);
+        }
+
+        &__title {
+            @include font(base, md, 500);
+        }
+
+        &__facts {
+            @include flex($gap: spacing(8));
+        }
+
+        &__fact {
+            text-align: right;
+        }
+
+        &__label {
+            display: block;
+            @include font(base, xs);
+            opacity: 0.7;
+        }
+
+        &__value {
+            @include font(base, sm);
+        }
+    }
+
+    &-gallery {
+        padding: spacing(24) spacing(6);
+
+        &__row {
+            min-height: 100vh;
+            @include flex($jc: space-between, $gap: spacing(12));
+
+            &--right {
+                flex-direction: row-reverse;
+            }
+
+            &--full {
+                flex-direction: column;
+            }
+        }
+
+        &__image {
+            flex: 3;
+
+            img {
+                width: 100%;
+                display: block;
+                object-fit: cover;
+                filter: grayscale(100%);
+                @include transition;
+
+                &:hover {
+                    filter: grayscale(0);
+                    transform: scale(1.02);
+                }
+            }
+        }
+
+        &__text {
+            flex: 1;
+            @include font(base, base, 300, desc, desc);
+        }
+
+        &__caption {
+            max-width: 600px;
+            margin-top: spacing(6);
+            @include font(base, base, 300, desc, desc);
+            text-align: center;
+        }
+    }
+}
+
+@keyframes worksReveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@include respond(lg) {
+    .works {
+        &-grid {
+            column-count: 2;
+        }
+
+        &-hero {
+            &__info {
+                padding: spacing(5) spacing(6);
+            }
+
+            &__facts {
+                gap: spacing(6);
+            }
+        }
+
+        &-gallery {
+            padding: spacing(20) spacing(6);
+
+            &__row {
+                gap: spacing(8);
+            }
+        }
+    }
+}
+
+@include respond(md) {
+    .works {
+        &-filter {
+            &__panel {
+                right: calc(50% - 140px);
+            }
+        }
+        &-grid {
+            column-count: 1;
+
+            &__title-en {
+                font-size: fs(base);
+            }
+
+            &__title {
+                font-size: fs(sm);
+            }
+        }
+
+        &-hero {
+            height: 80vh;
+
+            &__info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: spacing(4);
+                padding: spacing(4) spacing(6);
+            }
+
+            &__facts {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            &__fact {
+                text-align: left;
+            }
+
+            &__title {
+                font-size: fs(sm);
+            }
+
+            &__value {
+                font-size: fs(xs);
+            }
+        }
+
+        &-gallery {
+            padding: spacing(16) spacing(6);
+
+            &__row {
+                flex-direction: column;
+                min-height: auto;
+                gap: spacing(6);
+
+                &--right {
+                    flex-direction: column;
+                }
+
+                &--full {
+                    flex-direction: column;
+                }
+            }
+
+            &__image {
+                flex: none;
+
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+
+            &__text {
+                flex: none;
+                font-size: fs(sm);
+                margin-bottom: spacing(10);
+            }
+
+            &__caption {
+                margin-top: spacing(0);
+                margin-bottom: spacing(10);
+                font-size: fs(sm);
+                text-align: left;
+            }
+        }
+    }
+}

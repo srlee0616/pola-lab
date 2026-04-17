@@ -1,0 +1,39 @@
+@use '../abstracts/index' as *;
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+    transition-delay: calc(var(--delay, 0) * .07s);
+
+    &.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    &--left {
+        transform: translateX(-40px);
+
+        &.is-visible {
+            transform: translateX(0);
+        }
+    }
+
+    &--right {
+        transform: translateX(40px);
+
+        &.is-visible {
+            transform: translateX(0);
+        }
+    }
+
+    &--scale {
+        transform: scale(.9);
+
+        &.is-visible {
+            transform: scale(1);
+        }
+    }
+}

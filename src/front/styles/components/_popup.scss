@@ -1,0 +1,72 @@
+@use '../abstracts/index' as *;
+
+.popup {
+    position: fixed;
+    width: 320px;
+    @include flex(flex-start, $fd: column);
+    background: c-opacity(white, 0.9);
+    border: 1px solid c(gray, 100);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .15);
+    z-index: z(modal);
+    will-change: transform;
+
+    &:active {
+        cursor: grabbing;
+    }
+
+    &__image {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+        cursor: grab;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            user-select: none;
+        }
+    }
+
+    &__close {
+        @include position($t: 8px, $r: 8px);
+        background: c(white);
+        border-radius: radius(circle);
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        @include flex($jc: center);
+    }
+
+    &__content {
+        padding: spacing(6);
+        @include flex(flex-start, $fd: column);
+        flex-grow: 1;
+    }
+
+    &__category {
+        @include font(accent, xs, 600);
+        color: c(primary);
+        text-transform: uppercase;
+        margin-bottom: spacing(2);
+    }
+
+    &__title {
+        @include font(accent, lg, 600);
+        color: c(primary);
+        cursor: pointer;
+    }
+
+    &__footer {
+        margin-top: auto;
+        padding-top: spacing(4);
+        border-top: 1px solid c(gray, 100);
+        @include flex($jc: flex-end);
+    }
+
+    &__more {
+        @include flex($gap: spacing(1));
+        @include font(accent, xs, 400);
+        color: c(primary);
+    }
+}

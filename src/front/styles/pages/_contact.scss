@@ -1,0 +1,124 @@
+@use '../abstracts/index' as *;
+
+.contact {
+    background: c(white);
+    color: c(primary);
+    min-height: 100vh;
+    padding: spacing(30) spacing(20);
+
+    &__title {
+        @include font(accent, 4xl, 500, title);
+        text-transform: uppercase;
+    }
+
+    &__info {
+        @include flex($ai: stretch, $jc: space-between, $gap: spacing(20));
+        padding: spacing(5) 0;
+    }
+
+    &__list {
+        @include flex($fd: column, $ai: flex-start, $gap: spacing(5));
+        padding: spacing(10) 0;
+    }
+
+    &__label {
+        @include font(base, md, 600);
+        margin-bottom: spacing(1);
+    }
+
+    &__subtitle {
+        @include font(base, xl, 600, title);
+        color: c(primary);
+        margin: spacing(6) 0 spacing(2);
+    }
+
+    &__tel {
+        @include flex(flex-start, $fd: column, $gap: spacing(1));
+        margin-top: spacing(4);
+        
+        li {
+            @include flex($gap: spacing(4));
+
+            strong {
+                @include font(base, base, 600);
+                color: c(primary);
+            }
+            em {
+                @include flex($jc: space-between);
+                font-weight: 400;
+                width: 50px;
+            }
+        }
+    }
+
+    &__text {
+        @include font(base, base, 400);
+        color: c(gray, 700);
+        white-space: nowrap;
+    }
+
+    &__map {
+        width: 100%;
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    }
+}
+
+@include respond(md) {
+    .contact {
+        padding: spacing(20) spacing(6);
+
+        &__info {
+            flex-direction: column;
+            gap: spacing(6);
+            padding: 0;
+        }
+
+        &__list {
+            @include flex($equal: 2, $gap: spacing(2), $fw: wrap);
+        }
+
+        &__label {
+            font-size: fs(base);
+        }
+
+        &__text {
+            white-space: normal;
+            font-size: fs(sm);
+        }
+
+        &__map {
+            height: 420px;
+        }
+
+        &__title {
+            font-size: fs(2xl);
+        }
+
+        &__subtitle {
+            font-size: fs(md);
+        }
+
+        &__tel,
+        &__tel li strong {
+            font-size: fs(sm);
+        }
+    }
+}
+
+@include respond(sm) {
+    .contact {
+        &__list {
+            @include flex(flex-start, $fd: column);
+
+            > * {
+                flex: 1;
+                max-width: 100%;
+            }
+        }
+    }
+}

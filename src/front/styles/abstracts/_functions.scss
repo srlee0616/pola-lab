@@ -1,0 +1,144 @@
+@use 'variables' as *;
+@use 'sass:map';
+@use 'sass:color';
+@use 'sass:meta';
+
+// COLOR
+@function c($group, $key: null) {
+    $value: map.get($c, $group);
+
+    @if $value == null {
+        @error 'Unknown color group: #{$group}';
+    }
+
+    @if $key == null {
+        @return $value;
+    }
+
+    $result: map.get($value, $key);
+
+    @if $result == null {
+        @error 'Unknown color key: #{$group} / #{$key}';
+    }
+
+    @return $result;
+}
+
+@function c-darken($amount, $group, $key: null) {
+    @if $key == null {
+        @return color.adjust(c($group), $lightness: -$amount);
+    }
+
+    @return color.adjust(c($group, $key), $lightness: -$amount);
+}
+
+@function c-lighten($amount, $group, $key: null) {
+    @if $key == null {
+        @return color.adjust(c($group), $lightness: $amount);
+    }
+
+    @return color.adjust(c($group, $key), $lightness: $amount);
+}
+
+@function c-opacity($group-or-color, $key-or-alpha: null, $alpha: null) {
+    @if map.has-key($c, $group-or-color) and $alpha == null {
+        @return color.change(
+            c($group-or-color),
+            $alpha: $key-or-alpha
+        );
+    }
+
+    @if $alpha == null and meta.type-of($group-or-color) == 'color' {
+        @return color.change(
+            $group-or-color,
+            $alpha: $key-or-alpha
+        );
+    }
+
+    @return color.change(
+        c($group-or-color, $key-or-alpha),
+        $alpha: $alpha
+    );
+}
+
+// SPACING
+$space-unit: 4px;
+
+@function spacing($n) {
+    @return $space-unit * $n;
+}
+
+// RADIUS
+@function radius($key) {
+    $value: map.get($radius, $key);
+
+    @if $value == null {
+        @error "Radius key '#{$key}' not found.";
+    }
+
+    @return $value;
+}
+
+// TYPOGRAPHY
+@function fs($key) {
+    $value: map.get($fs, $key);
+
+    @if $value == null {
+        @error "Font size key '#{$key}' not found.";
+    }
+
+    @return $value;
+}
+
+@function lh($key) {
+    $value: map.get($lh, $key);
+
+    @if $value == null {
+        @error "Line-height key '#{$key}' not found.";
+    }
+
+    @return $value;
+}
+
+@function ls($key) {
+    $value: map.get($ls, $key);
+
+    @if $value == null {
+        @error "Letter-spacing key '#{$key}' not found.";
+    }
+
+    @return $value;
+}
+
+@function ff($key) {
+    $value: map.get($ff, $key);
+
+    @if $value == null {
+        @error "Font family key '#{$key}' not found.";
+    }
+
+    @return $value;
+}
+
+// SHADOW
+@function shadow($key) {
+    $value: map.get($shadow, $key);
+
+    @if $value == null {
+        @error "Shadow key '#{$key}' not found.";
+    }
+
+    @return $value;
+}
+
+
+// Z-INDEX
+@function z($key) {
+    $value: map.get($z, $key);
+
+    @if $value == null {
+        @error "Z-index key '#{$key}' not found.";
+    }
+
+    @return $value;
+}

@@ -1,0 +1,92 @@
+// 1. variables.scss - 디자인 시스템 토큰 관리
+@use 'sass:map';
+
+// Colors
+$c: (
+    primary: #4f46e5, // Indigo 600
+    white: #ffffff,
+    black: #050505,
+    gray: (
+        100: #f4f4f5,
+        300: #d4d4d8,
+        500: #71717a,
+        700: #3f3f46,
+        900: #18181b,
+    )
+);
+
+// Spacing
+$space-unit: 4px;
+
+// Radius
+$radius: (
+    sm: 4px,
+    base: 8px,
+    md: 12px,
+    lg: 24px,
+    xxl: 100px,
+    circle: 50%
+);
+
+// Font Family
+$ff: (
+    base: ("Pretendard", -apple-system, sans-serif),
+    serif: ("Playfair Display", serif),
+    accent: ("Poppins", sans-serif)
+);
+
+// Font Size
+$fs: (
+    xs: 12px,
+    sm: 14px,
+    base: 16px,
+    md: 20px,
+    lg: 24px,
+    xl: 32px,
+    2xl: 48px,
+    3xl: 64px,
+    4xl: 120px,
+    hero: 12vw,
+);
+
+// Line Height
+$lh: (
+    base: 1.5,
+    title: 1.1,
+    desc: 1.6,
+    none: 1
+);
+
+// Letter Spacing
+$ls: (
+    base: -0.02em,
+    desc: -0.05em,
+    title: -0.07em,
+    label: 0.1em,
+);
+
+// Shadow
+$shadow: (
+    base: (0 10px 15px -3px rgba(0, 0, 0, 0.1)),
+    lg: (0 25px 50px -12px rgba(0, 0, 0, 0.25))
+);
+
+// Z-index
+$z: (
+    behind: -1,
+    base: 1,
+    header: 1000,
+    overlay: 2000,
+    panel: 3000,
+    modal: 4000,
+    toast: 5000
+);
+
+// Breakpoints
+$bp: (
+    sm: 640px,
+    md: 768px,
+    lg: 1024px,
+    xl: 1280px,
+    base: 1920px
+);
