@@ -90,7 +90,12 @@
     }
 
     .modal-content {
+        // 인라인 스타일을 CSS로 완전 분리
+        position: fixed;
+        left: 50%;
+        top: 50%;
         transform-origin: center center;
+
         width: 100%;
         height: 100%;
         background: $theme-modal-bg;
@@ -98,7 +103,7 @@
         color: $theme-text;
 
         .modal-close {
-            @include position(absolute, spacing(8), spacing(8));
+            @include position(absolute, $r: 20px, $t: 20px);
             z-index: 100;
             background: rgba(255, 255, 255, 0.1);
             border: none;

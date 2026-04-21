@@ -1,9 +1,8 @@
-// 1. variables.scss - 디자인 시스템 토큰 관리
 @use 'sass:map';
 
 // Colors
 $c: (
-    primary: #4f46e5, // Indigo 600
+    primary: #4f46e5,
     white: #ffffff,
     black: #050505,
     gray: (

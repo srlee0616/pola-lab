@@ -1,37 +1,57 @@
 export const portfolioVariants = {
-  initial: { opacity: 0, y: 30 },
+  initial: {
+    opacity: 0,
+    y: 40  // 아래에서 위로 올라오도록 양수 값으로 설정
+  },
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.33, 1, 0.68, 1] }
-  },
-  exit: { opacity: 0, transition: { duration: 0.3 } }
-};
-
-export const modalVariants = {
-  initial: {
-    opacity: 0,
-    scale: 0.9, // 시작 크기를 키워 확장 거리를 줄임
-    x: "-50%",
-    y: "-50%"
-  },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    x: "-50%",
-    y: "-50%",
     transition: {
-      duration: 0.45,
-      // 튕김 수치를 1.1로 낮춰 자연스러운 확산감을 줌
-      ease: [0.34, 1.1, 0.64, 1]
+      duration: 0.7,
+      ease: [0.215, 0.61, 0.355, 1] // 부드럽게 감속하며 안착하는 이징
     }
   },
   exit: {
     opacity: 0,
     scale: 0.95,
+    y: 20, // 사라질 때도 아래로 살짝 내려가며 퇴장
+    transition: { duration: 0.2 }
+  }
+};
+
+export const modalOverlayVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.3 } },
+  exit: { opacity: 0, transition: { duration: 0.3, delay: 0.1 } }
+};
+
+export const modalVariants = {
+  initial: {
+    opacity: 0,
+    scaleX: 0.5,
+    scaleY: 0.05,
     x: "-50%",
     y: "-50%",
-    transition: { duration: 0.25, ease: "easeOut" }
+    transformOrigin: "center center"
+  },
+  animate: {
+    opacity: 1,
+    scaleX: 1,
+    scaleY: 1,
+    x: "-50%",
+    y: "-50%",
+    transition: {
+      duration: 0.6,
+      ease: [0.34, 1.56, 0.64, 1]
+    }
+  },
+  exit: {
+    opacity: 0,
+    scaleX: 0.8,
+    scaleY: 0.5,
+    x: "-50%",
+    y: "-50%",
+    transition: { duration: 0.3, ease: [0.33, 0, 0.67, 0] }
   }
 };
 

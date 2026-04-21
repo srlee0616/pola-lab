@@ -5,11 +5,20 @@ import PORTFOLIO_DATA from "@front/data/projects";
 import {
   portfolioVariants,
   modalVariants,
+  modalOverlayVariants,
   overlayVariants,
   textChildVariants
 } from "@front/data/motions";
 
 const CATEGORIES = ["ALL", "FEATURED", "BRANDING", "UX", "FILM/VIDEO"];
+
+const gridVariants = {
+  animate: {
+    transition: {
+      staggerChildren: 0.08 // 올라오는 속도감을 위해 간격을 살짝 줄임
+    }
+  }
+};
 
 function Home() {
   const [filter, setFilter] = useState("ALL");
@@ -19,17 +28,11 @@ function Home() {
     const sortedData = [...PORTFOLIO_DATA].sort((a, b) => {
       const orderA = CATEGORIES.indexOf(a.category.toUpperCase());
       const orderB = CATEGORIES.indexOf(b.category.toUpperCase());
-
-      if (orderA !== orderB) {
-        return orderA - orderB;
-      }
-
+      if (orderA !== orderB) return orderA - orderB;
       return a.id - b.id;
     });
 
-    if (filter === "ALL") {
-      return sortedData;
-    }
+    if (filter === "ALL") return sortedData;
     return sortedData.filter(item => item.category.toUpperCase() === filter);
   }, [filter]);
 
@@ -55,7 +58,13 @@ function Home() {
             </div>
           </div>
 
-          <motion.div layout className="portfolio-grid">
+          <motion.div
+            layout
+            className="portfolio-grid"
+            variants={gridVariants}
+            initial="initial"
+            animate="animate"
+          >
             <AnimatePresence mode='popLayout'>
               {filteredProjects.map((item) => (
                 <motion.div
@@ -104,9 +113,10 @@ function Home() {
           <div className="project-modal">
             <motion.div
               className="modal-overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              variants={modalOverlayVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
               onClick={() => setSelectedProject(null)}
             />
 
@@ -116,7 +126,6 @@ function Home() {
               initial="initial"
               animate="animate"
               exit="exit"
-              style={{ position: "fixed", left: "50%", top: "50%" }}
             >
               <button className="modal-close" onClick={() => setSelectedProject(null)}>
                 <X className="icon-x" />
