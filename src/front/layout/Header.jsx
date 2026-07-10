@@ -27,7 +27,9 @@ function Header() {
     <>
       <header className={`header ${scrolled ? 'is-scrolled' : ''}`}>
         <div className="header-inner">
-          <Link to="/" className="logo">HappyIct</Link>
+          <a href="/?reset=true" className="logo">
+            HappyIct
+          </a>
           <div className="header-actions">
             <button onClick={toggleMenu} className="menu-open-btn">
               <Menu className="icon-header" />

@@ -1,20 +1,25 @@
 export const portfolioVariants = {
   initial: {
     opacity: 0,
-    y: 40  // 아래에서 위로 올라오도록 양수 값으로 설정
+    y: 50
   },
   animate: {
     opacity: 1,
     y: 0,
+    transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }
+  },
+  scrollAnimate: {
+    opacity: 1,
+    y: 0,
     transition: {
-      duration: 0.7,
-      ease: [0.215, 0.61, 0.355, 1] // 부드럽게 감속하며 안착하는 이징
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1]
     }
   },
   exit: {
     opacity: 0,
     scale: 0.95,
-    y: 20, // 사라질 때도 아래로 살짝 내려가며 퇴장
+    y: 20,
     transition: { duration: 0.2 }
   }
 };
@@ -74,4 +79,23 @@ export const textChildVariants = {
     y: 0,
     transition: { duration: 0.6, ease: [0.33, 1, 0.68, 1] }
   }
+};
+
+export const modalTextWrapVariants = {
+  animate: {
+    transition: {
+      delayChildren: 0.4,
+      staggerChildren: 0.1
+    }
+  }
+};
+
+export const modalTextItemVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }
+  },
+  exit: { opacity: 0, y: 10, transition: { duration: 0.2 } }
 };

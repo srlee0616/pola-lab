@@ -18,6 +18,7 @@
             .logo {
                 @include font(accent, lg, 800, none, title);
                 letter-spacing: -0.05em;
+                cursor: pointer;
             }
         }
         .portfolio-filter {
@@ -90,7 +91,6 @@
     }
 
     .modal-content {
-        // 인라인 스타일을 CSS로 완전 분리
         position: fixed;
         left: 50%;
         top: 50%;

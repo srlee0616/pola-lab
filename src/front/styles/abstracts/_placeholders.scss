@@ -1,8 +1,6 @@
 @use 'variables' as *;
 @use 'functions' as *;
 
-
-// visually hidden
 %visually-hidden {
     position: absolute;
     width: .1rem;
@@ -15,8 +13,6 @@
     border: 0;
 }
 
-
-// visually hidden (focusable)
 %visually-hidden-focusable {
     @extend %visually-hidden;
 
@@ -32,7 +28,6 @@
     }
 }
 
-// layout
 %layout-surface {
     background-color: var(--surface);
     border-radius: radius(base);

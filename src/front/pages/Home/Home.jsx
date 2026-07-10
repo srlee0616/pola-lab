@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import PORTFOLIO_DATA from "@front/data/projects";
@@ -7,7 +7,9 @@ import {
   modalVariants,
   modalOverlayVariants,
   overlayVariants,
-  textChildVariants
+  textChildVariants,
+  modalTextWrapVariants,
+  modalTextItemVariants
 } from "@front/data/motions";
 
 const CATEGORIES = ["ALL", "FEATURED", "BRANDING", "UX", "FILM/VIDEO"];
@@ -15,7 +17,7 @@ const CATEGORIES = ["ALL", "FEATURED", "BRANDING", "UX", "FILM/VIDEO"];
 const gridVariants = {
   animate: {
     transition: {
-      staggerChildren: 0.08 // 올라오는 속도감을 위해 간격을 살짝 줄임
+      staggerChildren: 0.05
     }
   }
 };
@@ -23,6 +25,29 @@ const gridVariants = {
 function Home() {
   const [filter, setFilter] = useState("ALL");
   const [selectedProject, setSelectedProject] = useState(null);
+
+  // 1. 기존 시그널 감지 로직
+  useEffect(() => {
+    if (window.location.search.includes("reset=true")) {
+      setFilter("ALL");
+      window.scrollTo({ top: 0 });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
+  // ★ 2. 여기에 추가되었습니다: 모달 오픈 시 바디 스크롤바 제어 로직
+  useEffect(() => {
+    if (selectedProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // 컴포넌트가 언마운트되거나 예기치 않게 닫힐 때를 위한 안전한 복구용 clean-up 함수
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedProject]);
 
   const filteredProjects = useMemo(() => {
     const sortedData = [...PORTFOLIO_DATA].sort((a, b) => {
@@ -41,7 +66,15 @@ function Home() {
       <section className="home-portfolio">
         <div className="inner">
           <div className="portfolio-header">
-            <h1 className="logo">POLA LAB.</h1>
+            <h1
+              className="logo"
+              onClick={() => {
+                setFilter("ALL");
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
+              POLA LAB.
+            </h1>
             <div className="portfolio-filter">
               {CATEGORIES.map((cat) => (
                 <button
@@ -68,15 +101,19 @@ function Home() {
             <AnimatePresence mode='popLayout'>
               {filteredProjects.map((item) => (
                 <motion.div
-                  key={item.id}
+                  key={`${filter}-${item.id}`}
                   layout
                   variants={portfolioVariants}
                   initial="initial"
-                  animate="animate"
+                  whileInView="scrollAnimate"
                   exit="exit"
+                  viewport={{ once: true, amount: 0.1 }}
                   className="portfolio-card"
                   onClick={() => setSelectedProject(item)}
                   whileHover="hover"
+                  transition={{
+                    layout: { duration: 0.4, ease: "easeInOut" }
+                  }}
                 >
                   <div className="card-inner">
                     {item.type === "video" ? (
@@ -142,28 +179,33 @@ function Home() {
               </div>
 
               <div className="modal-body">
-                <div className="text-wrap">
-                  <h2 className="modal-title">{selectedProject.title}</h2>
-                  <div className="modal-tags">
+                <motion.div className="text-wrap" variants={modalTextWrapVariants}>
+
+                  <motion.h2 className="modal-title" variants={modalTextItemVariants}>
+                    {selectedProject.title}
+                  </motion.h2>
+
+                  <motion.div className="modal-tags" variants={modalTextItemVariants}>
                     <span>FEATURED</span>
                     <span>{selectedProject.category.toUpperCase()}</span>
-                  </div>
+                  </motion.div>
 
                   <div className="modal-info-grid">
-                    <div className="info-item">
+                    <motion.div className="info-item" variants={modalTextItemVariants}>
                       <span className="label">CLIENT</span>
                       <span className="value">{selectedProject.client}</span>
-                    </div>
-                    <div className="info-item">
+                    </motion.div>
+                    <motion.div className="info-item" variants={modalTextItemVariants}>
                       <span className="label">ABOUT</span>
                       <p className="value desc">{selectedProject.desc}</p>
-                    </div>
+                    </motion.div>
                   </div>
 
-                  <a href="#" className="visit-link">
+                  <motion.a href="#" className="visit-link" variants={modalTextItemVariants}>
                     Visit Website <span>→</span>
-                  </a>
-                </div>
+                  </motion.a>
+
+                </motion.div>
               </div>
             </motion.div>
           </div>
