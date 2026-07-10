@@ -13,10 +13,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: c(gray, 500);
+    background-color: c(gray, 700);
 
     &:hover {
-        background-color: c(gray, 700);
+        background-color: c(gray, 500);
     }
 }
 
