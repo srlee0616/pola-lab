@@ -2,7 +2,7 @@ export const HEADER_SETTINGS = {
   SCROLL_THRESHOLD: 20,
 };
 
-export const portfolioVariants = {
+export const cardMotion = {
   initial: { opacity: 0, y: 30, scale: 0.9 },
   animate: {
     opacity: 1,

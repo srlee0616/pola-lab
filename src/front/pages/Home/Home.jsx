@@ -3,13 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import PORTFOLIO_DATA from "@front/data/projects";
 import {
-  portfolioVariants,
-  modalVariants,
-  modalOverlayVariants,
-  overlayVariants,
-  textChildVariants,
-  modalTextWrapVariants,
-  modalTextItemVariants
+  cardMotion,
+  popupMotion,
+  dimMotion,
+  hoverBg,
+  hoverText,
+  staggerWrap,
+  fadeUpItem
 } from "@front/data/motions";
 
 const CATEGORIES = ["ALL", "FEATURED", "BRANDING", "UX", "FILM/VIDEO"];
@@ -26,7 +26,6 @@ function Home() {
   const [filter, setFilter] = useState("ALL");
   const [selectedProject, setSelectedProject] = useState(null);
 
-  // 1. 기존 시그널 감지 로직
   useEffect(() => {
     if (window.location.search.includes("reset=true")) {
       setFilter("ALL");
@@ -35,26 +34,38 @@ function Home() {
     }
   }, []);
 
-  // ★ 2. 여기에 추가되었습니다: 모달 오픈 시 바디 스크롤바 제어 로직
   useEffect(() => {
     if (selectedProject) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
       document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
     } else {
       document.body.style.overflow = 'unset';
+      document.body.style.paddingRight = '0px';
     }
 
-    // 컴포넌트가 언마운트되거나 예기치 않게 닫힐 때를 위한 안전한 복구용 clean-up 함수
     return () => {
       document.body.style.overflow = 'unset';
+      document.body.style.paddingRight = '0px';
     };
   }, [selectedProject]);
 
   const filteredProjects = useMemo(() => {
-    const sortedData = [...PORTFOLIO_DATA].sort((a, b) => {
+    const normalizedData = PORTFOLIO_DATA.map((item, index) => ({
+      ...item,
+      id: item.key || `project-${index}`
+    }));
+
+    const sortedData = [...normalizedData].sort((a, b) => {
       const orderA = CATEGORIES.indexOf(a.category.toUpperCase());
       const orderB = CATEGORIES.indexOf(b.category.toUpperCase());
+
       if (orderA !== orderB) return orderA - orderB;
-      return a.id - b.id;
+
+      const priorityA = a.order ?? 999;
+      const priorityB = b.order ?? 999;
+      return priorityA - priorityB;
     });
 
     if (filter === "ALL") return sortedData;
@@ -103,7 +114,7 @@ function Home() {
                 <motion.div
                   key={`${filter}-${item.id}`}
                   layout
-                  variants={portfolioVariants}
+                  variants={cardMotion}
                   initial="initial"
                   whileInView="scrollAnimate"
                   exit="exit"
@@ -126,13 +137,13 @@ function Home() {
 
                     <motion.div
                       className="card-overlay"
-                      variants={overlayVariants}
+                      variants={hoverBg}
                     >
                       <div className="text-group">
-                        <motion.h3 className="project-name" variants={textChildVariants}>
+                        <motion.h3 className="project-name" variants={hoverText}>
                           {item.title}
                         </motion.h3>
-                        <motion.p className="client" variants={textChildVariants}>
+                        <motion.p className="client" variants={hoverText}>
                           {item.client}
                         </motion.p>
                       </div>
@@ -150,7 +161,7 @@ function Home() {
           <div className="project-modal">
             <motion.div
               className="modal-overlay"
-              variants={modalOverlayVariants}
+              variants={dimMotion}
               initial="initial"
               animate="animate"
               exit="exit"
@@ -159,7 +170,7 @@ function Home() {
 
             <motion.div
               className="modal-content"
-              variants={modalVariants}
+              variants={popupMotion}
               initial="initial"
               animate="animate"
               exit="exit"
@@ -179,29 +190,29 @@ function Home() {
               </div>
 
               <div className="modal-body">
-                <motion.div className="text-wrap" variants={modalTextWrapVariants}>
+                <motion.div className="text-wrap" variants={staggerWrap}>
 
-                  <motion.h2 className="modal-title" variants={modalTextItemVariants}>
+                  <motion.h2 className="modal-title" variants={fadeUpItem}>
                     {selectedProject.title}
                   </motion.h2>
 
-                  <motion.div className="modal-tags" variants={modalTextItemVariants}>
+                  <motion.div className="modal-tags" variants={fadeUpItem}>
                     <span>FEATURED</span>
                     <span>{selectedProject.category.toUpperCase()}</span>
                   </motion.div>
 
                   <div className="modal-info-grid">
-                    <motion.div className="info-item" variants={modalTextItemVariants}>
+                    <motion.div className="info-item" variants={fadeUpItem}>
                       <span className="label">CLIENT</span>
                       <span className="value">{selectedProject.client}</span>
                     </motion.div>
-                    <motion.div className="info-item" variants={modalTextItemVariants}>
+                    <motion.div className="info-item" variants={fadeUpItem}>
                       <span className="label">ABOUT</span>
                       <p className="value desc">{selectedProject.desc}</p>
                     </motion.div>
                   </div>
 
-                  <motion.a href="#" className="visit-link" variants={modalTextItemVariants}>
+                  <motion.a href="#" className="visit-link" variants={fadeUpItem}>
                     Visit Website <span>→</span>
                   </motion.a>
 

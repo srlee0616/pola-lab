@@ -9,7 +9,6 @@
         max-width: 1400px;
         margin: 0 auto;
         @include flex(flex-start, space-between);
-
         @include respond(md) {
             @include flex(flex-start, null, column, null, spacing(16));
         }
@@ -28,7 +27,6 @@
 
     &-right {
         @include flex(flex-start, null, null, null, spacing(12));
-
         @include respond(sm) {
             @include flex(flex-start, null, column, null, spacing(8));
         }
