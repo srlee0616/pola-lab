@@ -6,45 +6,22 @@
     min-height: 100vh;
 
     &-portfolio {
-        padding: spacing(15) 0;
+        padding: spacing(32) 0 spacing(15) 0;
+
         .inner {
             max-width: 1600px;
             margin: 0 auto;
             padding: 0 spacing(10);
         }
-        .portfolio-header {
-            @include flex(center, space-between);
-            margin-bottom: spacing(12);
-            .logo {
-                @include font(accent, lg, 800, none, title);
-                letter-spacing: -0.05em;
-                cursor: pointer;
-            }
-        }
-        .portfolio-filter {
-            @include flex(center, flex-end, row, nowrap, spacing(6));
-            .filter-btn {
-                position: relative;
-                padding: spacing(2) 0;
-                @include font(accent, xs, 500, none, label);
-                text-transform: uppercase;
-                color: $theme-text-dim;
-                border: none;
-                background: transparent;
-                cursor: pointer;
-                @include transition;
-                &.is-active { color: $theme-text; }
-                .underline {
-                    @include position(absolute, null, 0, -4px, 0);
-                    height: 2px;
-                    background-color: $theme-text;
-                }
-            }
-        }
+
         .portfolio-grid {
             @include flex(stretch, flex-start, row, wrap, spacing(8), 2);
-            @include respond(md) { @include flex(stretch, flex-start, row, wrap, spacing(6), 1); }
+
+            @include respond(md) {
+                @include flex(stretch, flex-start, row, wrap, spacing(6), 1);
+            }
         }
+
         .portfolio-card {
             cursor: pointer;
             border-radius: $theme-card-radius;
@@ -78,15 +55,27 @@
                     -moz-osx-font-smoothing: grayscale;
                     image-rendering: -webkit-optimize-contrast;
                 }
+
                 .card-overlay {
                     @include position(absolute, 0, 0, 0, 0);
-                    background: linear-gradient(to bottom, rgba(0,0,0,0) 30%, rgba(0,0,0,0.8) 100%);
+                    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.8) 100%);
                     @include flex(flex-end, flex-start);
                     padding: spacing(10);
                     pointer-events: none;
+
                     .text-group {
-                        .project-name { @include font(base, xl, 700, title); margin-bottom: spacing(2); color: $theme-text; line-height: 1.2; }
-                        .client { @include font(base, sm, 400); color: rgba(255,255,255,0.6); line-height: 1; }
+                        .project-name {
+                            @include font(base, xl, 700, title);
+                            margin-bottom: spacing(2);
+                            color: $theme-text;
+                            line-height: 1.2;
+                        }
+
+                        .client {
+                            @include font(base, sm, 400);
+                            color: rgba(255, 255, 255, 0.6);
+                            line-height: 1;
+                        }
                     }
                 }
             }
@@ -97,6 +86,7 @@
                 }
             }
         }
+
         .portfolio-more {
             margin-top: spacing(15);
             @include flex(center, center);
@@ -167,8 +157,17 @@
             @include flex(center, center);
             cursor: pointer;
             @include transition;
-            .icon-x { width: 20px; height: 20px; stroke: $theme-text; }
-            &:hover { background: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+
+            .icon-x {
+                width: 20px;
+                height: 20px;
+                stroke: $theme-text;
+            }
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: rotate(90deg);
+            }
         }
 
         .modal-media-wrap {
@@ -178,12 +177,19 @@
             z-index: 1;
             font-size: 0;
             line-height: 0;
+
             &::after {
                 content: '';
                 @include position(absolute, 0, 0, 0, 0);
                 background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.8) 100%);
             }
-            .bg-media { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+            .bg-media {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
         }
 
         .modal-body {
@@ -193,29 +199,77 @@
             height: 100%;
             padding: spacing(20) spacing(10);
             @include flex(flex-end, flex-start);
+
             .text-wrap {
                 max-width: 1400px;
                 margin: 0 auto;
                 width: 100%;
-                .modal-title { @include font(base, 4xl, 700, title); margin-bottom: spacing(4); }
+
+                .modal-title {
+                    @include font(base, 4xl, 700, title);
+                    margin-bottom: spacing(4);
+                }
+
                 .modal-tags {
                     @include flex(center, flex-start, row, nowrap, spacing(2));
                     margin-bottom: spacing(15);
-                    span { padding: spacing(1) spacing(4); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 100px; font-size: 11px; letter-spacing: 0.05em; }
+
+                    span {
+                        padding: spacing(1) spacing(4);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                        border-radius: 100px;
+                        font-size: 11px;
+                        letter-spacing: 0.05em;
+                    }
                 }
+
                 .modal-info-grid {
                     @include flex(flex-start, flex-start, row, wrap, spacing(15));
                     margin-bottom: spacing(10);
+
                     .info-item {
-                        .label { display: block; font-size: 11px; color: #666; margin-bottom: spacing(2); letter-spacing: 0.1em; }
-                        .value { font-size: 15px; color: $theme-text; line-height: 1.6; &.desc { max-width: 700px; } }
-                        &:first-child { width: 220px; }
+                        .label {
+                            display: block;
+                            font-size: 11px;
+                            color: #666;
+                            margin-bottom: spacing(2);
+                            letter-spacing: 0.1em;
+                        }
+
+                        .value {
+                            font-size: 15px;
+                            color: $theme-text;
+                            line-height: 1.6;
+
+                            &.desc {
+                                max-width: 700px;
+                            }
+                        }
+
+                        &:first-child {
+                            width: 220px;
+                        }
                     }
                 }
+
                 .visit-link {
-                    display: inline-block; font-size: 14px; color: $theme-text; text-decoration: none; padding-bottom: 4px; border-bottom: 1px solid $theme-text;
-                    span { margin-left: 8px; @include transition; }
-                    &:hover span { transform: translateX(5px); }
+                    display: inline-block;
+                    font-size: 14px;
+                    color: $theme-text;
+                    text-decoration: none;
+                    padding-bottom: 4px;
+                    border-bottom: 1px solid $theme-text;
+
+                    span {
+                        margin-left: 8px;
+                        @include transition;
+                    }
+
+                    &:hover {
+                        span {
+                            transform: translateX(5px);
+                        }
+                    }
                 }
             }
         }

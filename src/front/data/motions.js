@@ -1,33 +1,48 @@
 export const cardMotion = {
   initial: {
     opacity: 0,
-    y: 50
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }
+    y: 12
   },
   scrollAnimate: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1]
+      duration: 0.35,
+      ease: [
+        0.25,
+        1,
+        0.5,
+        1
+      ]
     }
   },
   exit: {
     opacity: 0,
-    scale: 0.95,
-    y: 20,
-    transition: { duration: 0.2 }
+    y: 8,
+    transition: {
+      duration: 0.25,
+      ease: "easeInOut"
+    }
   }
 };
 
 export const dimMotion = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 0.3 } },
-  exit: { opacity: 0, transition: { duration: 0.3, delay: 0.1 } }
+  initial: {
+    opacity: 0
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.3
+    }
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.3,
+      delay: 0.1
+    }
+  }
 };
 
 export const popupMotion = {
@@ -45,7 +60,12 @@ export const popupMotion = {
     y: "-50%",
     transition: {
       duration: 0.5,
-      ease: [0.16, 1, 0.3, 1]
+      ease: [
+        0.16,
+        1,
+        0.3,
+        1
+      ]
     }
   },
   exit: {
@@ -55,13 +75,20 @@ export const popupMotion = {
     y: "-50%",
     transition: {
       duration: 0.3,
-      ease: [0.25, 1, 0.5, 1]
+      ease: [
+        0.25,
+        1,
+        0.5,
+        1
+      ]
     }
   }
 };
 
 export const hoverBg = {
-  initial: { opacity: 0 },
+  initial: {
+    opacity: 0
+  },
   hover: {
     opacity: 1,
     transition: {
@@ -73,15 +100,26 @@ export const hoverBg = {
 };
 
 export const hoverText = {
-  initial: { opacity: 0, y: 20 },
+  initial: {
+    opacity: 0,
+    y: 20
+  },
   hover: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.33, 1, 0.68, 1] }
+    transition: {
+      duration: 0.6,
+      ease: [
+        0.33,
+        1,
+        0.68,
+        1
+      ]
+    }
   }
 };
 
-export const staggerWrap = {
+export const staggerWrapDetails = {
   animate: {
     transition: {
       delayChildren: 0.3,
@@ -93,19 +131,19 @@ export const staggerWrap = {
 export const fadeUpItem = {
   initial: {
     opacity: 0,
-    y: 12
+    y: 15
   },
   animate: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.7,
-      ease: [0.16, 1, 0.3, 1]
+      duration: 0.5,
+      ease: [
+        0.25,
+        1,
+        0.5,
+        1
+      ]
     }
-  },
-  exit: {
-    opacity: 0,
-    y: 5,
-    transition: { duration: 0.2, ease: "easeOut" }
   }
 };

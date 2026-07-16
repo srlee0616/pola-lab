@@ -1,42 +1,53 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { cardMotion, hoverBg, hoverText } from "@front/data/motions";
+import { cardMotion } from '@front/data/motions';
 
 function PortfolioCard({ item, filter, onSelect }) {
   return (
     <motion.div
-      layout
+      layout="position"
       variants={cardMotion}
       initial="initial"
-      whileInView="scrollAnimate"
+      animate="scrollAnimate"
       exit="exit"
-      viewport={{ once: true, amount: 0.1 }}
       className="portfolio-card"
       onClick={() => onSelect(item)}
       whileHover="hover"
       transition={{
-        layout: { duration: 0.4, ease: "easeInOut" }
+        layout: {
+          duration: 0.35,
+          ease: [
+            0.25,
+            1,
+            0.5,
+            1
+          ]
+        }
       }}
     >
       <div className="card-inner">
         {item.type === "video" ? (
-          <video autoPlay loop muted playsInline className="card-media">
-            <source src={item.source} type="video/mp4" />
-          </video>
+          <video
+            src={item.source}
+            className="card-media"
+            muted
+            loop
+            playsInline
+            autoPlay
+          />
         ) : (
-          <img src={item.source} alt={item.title} className="card-media" />
+          <img
+            src={item.source}
+            alt={item.title}
+            className="card-media"
+          />
         )}
-
-        <motion.div className="card-overlay" variants={hoverBg}>
+        <div className="card-overlay">
           <div className="text-group">
-            <motion.h3 className="project-name" variants={hoverText}>
-              {item.title}
-            </motion.h3>
-            <motion.p className="client" variants={hoverText}>
-              {item.client}
-            </motion.p>
+            <h3 className="project-name">{item.title}</h3>
+            <p className="client">{item.client}</p>
           </div>
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
-import { popupMotion, dimMotion, staggerWrap, fadeUpItem } from "@front/data/motions";
+import { popupMotion, dimMotion, fadeUpItem } from "@front/data/motions";
 
 function ProjectModal({ project, onClose }) {
   if (!project) return null;

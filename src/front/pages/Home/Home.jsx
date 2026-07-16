@@ -1,20 +1,18 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import PORTFOLIO_DATA from "@front/data/projects";
 
 import PortfolioFilter from '@front/components/PortfolioFilter';
 import PortfolioCard from '@front/components/PortfolioCard';
 import ProjectModal from '@front/components/ProjectModal';
 
-const CATEGORIES = ["ALL", "FEATURED", "BRANDING", "UX", "FILM/VIDEO"];
-
-const gridVariants = {
-  animate: {
-    transition: {
-      staggerChildren: 0.05
-    }
-  }
-};
+const CATEGORIES = [
+  "ALL",
+  "FEATURED",
+  "BRANDING",
+  "UX",
+  "FILM/VIDEO"
+];
 
 function Home() {
   const [filter, setFilter] = useState("ALL");
@@ -59,15 +57,19 @@ function Home() {
       const orderA = CATEGORIES.indexOf(a.category.toUpperCase());
       const orderB = CATEGORIES.indexOf(b.category.toUpperCase());
 
-      if (orderA !== orderB) return orderA - orderB;
+      if (orderA !== orderB) {
+        return orderA - orderB;
+      }
 
       const priorityA = a.order ?? 999;
       const priorityB = b.order ?? 999;
       return priorityA - priorityB;
     });
 
-    if (filter === "ALL") return sortedData;
-    return sortedData.filter(item => item.category.toUpperCase() === filter);
+    if (filter === "ALL") {
+      return sortedData;
+    }
+    return sortedData.filter((item) => item.category.toUpperCase() === filter);
   }, [filter]);
 
   const slicedProjects = useMemo(() => {
@@ -96,14 +98,8 @@ function Home() {
             onFilterChange={setFilter}
           />
 
-          <motion.div
-            layout
-            className="portfolio-grid"
-            variants={gridVariants}
-            initial="initial"
-            animate="animate"
-          >
-            <AnimatePresence mode='popLayout'>
+          <div className="portfolio-grid">
+            <AnimatePresence mode="wait">
               {slicedProjects.map((item) => (
                 <PortfolioCard
                   key={`${filter}-${item.id}`}
@@ -113,11 +109,14 @@ function Home() {
                 />
               ))}
             </AnimatePresence>
-          </motion.div>
+          </div>
 
           {filteredProjects.length > visibleCount && (
             <div className="portfolio-more">
-              <button className="more-btn" onClick={handleLoadMore}>
+              <button
+                className="more-btn"
+                onClick={handleLoadMore}
+              >
                 <span>More</span>
                 <span className="count-info">
                   ({visibleCount} / {filteredProjects.length})

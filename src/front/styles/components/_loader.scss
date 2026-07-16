@@ -6,7 +6,9 @@
     z-index: z(modal);
     @include flex($jc: center);
     background-color: c(white);
-    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    transition:
+        opacity 1s ease-in-out,
+        transform 1s ease-in-out;
 
     &.is-fading {
         opacity: 0;
@@ -24,7 +26,6 @@
         font-weight: 700;
         color: c(primary);
         opacity: 0;
-
         animation: doubleHeartbeatScale 3s ease-in-out forwards 0.5s;
     }
 }
@@ -40,10 +41,21 @@
         opacity: 1;
     }
 
-    20% { transform: scale(1); }
-    30% { transform: scale(1.05); }
-    40% { transform: scale(1); }
-    55% { transform: scale(1); }
+    20% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.05);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+
+    55% {
+        transform: scale(1);
+    }
 
     100% {
         transform: scale(1.4);
