@@ -1,13 +1,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X } from 'lucide-react';
-import { popupMotion, dimMotion, fadeUpItem } from "@front/data/motions";
+import {
+  dimMotion,
+  popupMotion,
+  staggerWrapDetails,
+  fadeUpItem
+} from "@front/data/motions";
 
 function ProjectModal({ project, onClose }) {
   if (!project) return null;
 
   return (
     <div className="project-modal">
+      {/* 1. 뒷배경 블러 레이어 */}
       <motion.div
         className="modal-overlay"
         variants={dimMotion}
@@ -17,6 +22,7 @@ function ProjectModal({ project, onClose }) {
         onClick={onClose}
       />
 
+      {/* 2. 중앙 정렬 팝업 본체 */}
       <motion.div
         className="modal-content"
         variants={popupMotion}
@@ -24,45 +30,72 @@ function ProjectModal({ project, onClose }) {
         animate="animate"
         exit="exit"
       >
+        {/* 3. 우측 상단 닫기 버튼 */}
         <button className="modal-close" onClick={onClose}>
-          <X className="icon-x" />
+          <svg
+            className="icon-x"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
         </button>
 
+        {/* 4. 배경 풀화면 미디어 */}
         <div className="modal-media-wrap">
           {project.type === "video" ? (
-            <video autoPlay loop muted playsInline className="bg-media">
-              <source src={project.source} type="video/mp4" />
-            </video>
+            <video
+              src={project.source}
+              className="bg-media"
+              muted
+              loop
+              playsInline
+              autoPlay
+            />
           ) : (
-            <img src={project.source} alt={project.title} className="bg-media" />
+            <img
+              src={project.source}
+              alt={project.title}
+              className="bg-media"
+            />
           )}
         </div>
 
+        {/* 5. 텍스트 정보 레이어 */}
         <div className="modal-body">
-          <motion.div className="text-wrap" variants={staggerWrap}>
-            <motion.h2 className="modal-title" variants={fadeUpItem}>
+          <motion.div
+            className="text-wrap"
+            variants={staggerWrapDetails}
+            initial="initial"
+            animate="animate"
+          >
+            <motion.h2 variants={fadeUpItem} className="modal-title">
               {project.title}
             </motion.h2>
 
-            <motion.div className="modal-tags" variants={fadeUpItem}>
-              <span>FEATURED</span>
-              <span>{project.category.toUpperCase()}</span>
+            <motion.div variants={fadeUpItem} className="modal-tags">
+              <span>{project.category}</span>
             </motion.div>
 
-            <div className="modal-info-grid">
-              <motion.div className="info-item" variants={fadeUpItem}>
-                <span className="label">CLIENT</span>
-                <span className="value">{project.client}</span>
-              </motion.div>
-              <motion.div className="info-item" variants={fadeUpItem}>
-                <span className="label">ABOUT</span>
-                <p className="value desc">{project.desc}</p>
-              </motion.div>
-            </div>
-
-            <motion.a href="#" className="visit-link" variants={fadeUpItem}>
-              Visit Website <span>→</span>
-            </motion.a>
+            <motion.div variants={fadeUpItem} className="modal-info-grid">
+              <div className="info-item">
+                <span className="label">Client</span>
+                <span className="value">{project.client || "—"}</span>
+              </div>
+              <div className="info-item">
+                <span className="label">Role</span>
+                <span className="value">{project.role || "—"}</span>
+              </div>
+              {project.description && (
+                <div className="info-item">
+                  <span className="label">Overview</span>
+                  <span className="value desc">{project.description}</span>
+                </div>
+              )}
+            </motion.div>
           </motion.div>
         </div>
       </motion.div>
@@ -70,4 +103,4 @@ function ProjectModal({ project, onClose }) {
   );
 }
 
-export default ProjectModal;
+export default React.memo(ProjectModal);

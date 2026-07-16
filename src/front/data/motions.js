@@ -147,3 +147,12 @@ export const fadeUpItem = {
     }
   }
 };
+
+export const staggerWrap = {
+  animate: {
+    transition: {
+      delayChildren: 0.1,
+      staggerChildren: 0.1
+    }
+  }
+};
