@@ -97,6 +97,41 @@
                 }
             }
         }
+        .portfolio-more {
+            margin-top: spacing(15);
+            @include flex(center, center);
+            width: 100%;
+
+            .more-btn {
+                background: transparent;
+                border: 1px solid rgba($theme-text, 0.2);
+                color: $theme-text;
+                padding: spacing(4) spacing(10);
+                border-radius: 100px;
+                @include font(accent, xs, 500, none, label);
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                cursor: pointer;
+                @include transition;
+                @include flex(center, center, row, nowrap, spacing(2));
+
+                .count-info {
+                    font-size: 11px;
+                    color: $theme-text-dim;
+                    margin-left: spacing(1);
+                }
+
+                &:hover {
+                    background: $theme-text;
+                    color: $theme-bg;
+                    border-color: $theme-text;
+
+                    .count-info {
+                        color: rgba($theme-bg, 0.6);
+                    }
+                }
+            }
+        }
     }
 }
 
