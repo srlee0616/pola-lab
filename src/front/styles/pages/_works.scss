@@ -2,14 +2,14 @@
 
 .works {
     padding: spacing(24) spacing(6);
-    
+
     &-filter {
         position: relative;
         &__button {
             padding: spacing(2) spacing(6);
             border: 1px solid currentColor;
             cursor: pointer;
-            @include font(accent, sm, 600, base, label);
+            @include font(base, sm, 600, base, label);
             @include transition;
         }
 
@@ -57,7 +57,7 @@
 
         &__label {
             text-align: left;
-            @include font(accent, sm);
+            @include font(base, sm);
             opacity: .7;
             transition: opacity .3s ease;
             color: c(primary);
@@ -82,7 +82,7 @@
             opacity: 0;
             transform: translateY(24px);
             animation: worksReveal .6s ease forwards;
-            
+
             @for $i from 1 through 3 {
                 &:nth-child(#{$i}) {
                     animation-delay: $i * .05s;
@@ -126,7 +126,7 @@
         }
 
         &__title-en {
-            @include font(accent, 2xl, 500);
+            @include font(base, 2xl, 500);
             color: c(white);
             margin-bottom: spacing(2);
             transform: translateY(16px);
@@ -135,7 +135,7 @@
         }
 
         &__title {
-            @include font(body, lg, 300);
+            @include font(base, lg, 300);
             color: c(white);
             transform: translateY(16px);
             @include transition(transform, .5s, ease, .1s);
@@ -231,13 +231,13 @@
 
         &__text {
             flex: 1;
-            @include font(base, base, 300, desc, desc);
+            @include font(base, 300, desc);
         }
 
         &__caption {
             max-width: 600px;
             margin-top: spacing(6);
-            @include font(base, base, 300, desc, desc);
+            @include font(base, 300, desc);
             text-align: center;
         }
     }

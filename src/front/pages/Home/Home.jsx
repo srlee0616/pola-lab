@@ -6,13 +6,7 @@ import PortfolioFilter from '@front/components/PortfolioFilter';
 import PortfolioCard from '@front/components/PortfolioCard';
 import ProjectModal from '@front/components/ProjectModal';
 
-const CATEGORIES = [
-  "ALL",
-  "FEATURED",
-  "BRANDING",
-  "UX",
-  "FILM/VIDEO"
-];
+const CATEGORIES = ["ALL", "FEATURED", "BRANDING", "UX", "FILM/VIDEO"];
 
 function Home() {
   const [filter, setFilter] = useState("ALL");
@@ -21,120 +15,61 @@ function Home() {
 
   useEffect(() => {
     if (window.location.search.includes("reset=true")) {
-      setFilter("ALL");
-      window.scrollTo({ top: 0 });
+      setFilter("ALL"); window.scrollTo({ top: 0 });
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, []);
 
-  useEffect(() => {
-    setVisibleCount(4);
-  }, [filter]);
+  useEffect(() => { setVisibleCount(4); }, [filter]);
 
   useEffect(() => {
     if (selectedProject) {
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
+      document.body.style.overflow = 'hidden'; document.body.style.paddingRight = `${scrollbarWidth}px`;
     } else {
-      document.body.style.overflow = 'unset';
-      document.body.style.paddingRight = '0px';
+      document.body.style.overflow = 'unset'; document.body.style.paddingRight = '0px';
     }
-
-    return () => {
-      document.body.style.overflow = 'unset';
-      document.body.style.paddingRight = '0px';
-    };
+    return () => { document.body.style.overflow = 'unset'; document.body.style.paddingRight = '0px'; };
   }, [selectedProject]);
 
   const filteredProjects = useMemo(() => {
-    const normalizedData = PORTFOLIO_DATA.map((item, index) => ({
-      ...item,
-      id: item.key || `project-${index}`
-    }));
-
+    const normalizedData = PORTFOLIO_DATA.map((item, index) => ({ ...item, id: item.key || `project-${index}` }));
     const sortedData = [...normalizedData].sort((a, b) => {
-      const orderA = CATEGORIES.indexOf(a.category.toUpperCase());
-      const orderB = CATEGORIES.indexOf(b.category.toUpperCase());
-
-      if (orderA !== orderB) {
-        return orderA - orderB;
-      }
-
-      const priorityA = a.order ?? 999;
-      const priorityB = b.order ?? 999;
-      return priorityA - priorityB;
+      const orderA = CATEGORIES.indexOf(a.category.toUpperCase()), orderB = CATEGORIES.indexOf(b.category.toUpperCase());
+      if (orderA !== orderB) return orderA - orderB;
+      return (a.order ?? 999) - (b.order ?? 999);
     });
-
-    if (filter === "ALL") {
-      return sortedData;
-    }
-    return sortedData.filter((item) => item.category.toUpperCase() === filter);
+    return filter === "ALL" ? sortedData : sortedData.filter((item) => item.category.toUpperCase() === filter);
   }, [filter]);
 
-  const slicedProjects = useMemo(() => {
-    return filteredProjects.slice(0, visibleCount);
-  }, [filteredProjects, visibleCount]);
-
-  const handleSelectProject = useCallback((project) => {
-    setSelectedProject(project);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setSelectedProject(null);
-  }, []);
-
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 4);
-  };
+  const slicedProjects = useMemo(() => filteredProjects.slice(0, visibleCount), [filteredProjects, visibleCount]);
+  const handleSelectProject = useCallback((project) => setSelectedProject(project), []);
+  const handleCloseModal = useCallback(() => setSelectedProject(null), []);
+  const handleLoadMore = () => setVisibleCount((prev) => prev + 4);
 
   return (
     <div className="home">
       <section className="home-portfolio">
         <div className="inner">
-          <PortfolioFilter
-            categories={CATEGORIES}
-            activeFilter={filter}
-            onFilterChange={setFilter}
-          />
+          <PortfolioFilter categories={CATEGORIES} activeFilter={filter} onFilterChange={setFilter} />
 
           <div className="portfolio-grid">
             <AnimatePresence mode="wait">
-              {slicedProjects.map((item) => (
-                <PortfolioCard
-                  key={`${filter}-${item.id}`}
-                  item={item}
-                  filter={filter}
-                  onSelect={handleSelectProject}
-                />
-              ))}
+              {slicedProjects.map((item, index) => <PortfolioCard key={`${filter}-${item.id}`} item={item} index={index} filter={filter} onSelect={handleSelectProject} />)}
             </AnimatePresence>
           </div>
 
           {filteredProjects.length > visibleCount && (
             <div className="portfolio-more">
-              <button
-                className="more-btn"
-                onClick={handleLoadMore}
-              >
-                <span>More</span>
-                <span className="count-info">
-                  ({visibleCount} / {filteredProjects.length})
-                </span>
+              <button className="more-btn" onClick={handleLoadMore}>
+                <span>More</span><span className="count-info">({visibleCount} / {filteredProjects.length})</span>
               </button>
             </div>
           )}
         </div>
       </section>
 
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectModal
-            project={selectedProject}
-            onClose={handleCloseModal}
-          />
-        )}
-      </AnimatePresence>
+      <AnimatePresence>{selectedProject && <ProjectModal project={selectedProject} onClose={handleCloseModal} />}</AnimatePresence>
     </div>
   );
 }

@@ -7,7 +7,7 @@
     padding: spacing(30) spacing(20);
 
     &__title {
-        @include font(accent, 4xl, 500, title);
+        @include font(base, 4xl, 500, title);
         text-transform: uppercase;
     }
 
@@ -35,12 +35,12 @@
     &__tel {
         @include flex(flex-start, $fd: column, $gap: spacing(1));
         margin-top: spacing(4);
-        
+
         li {
             @include flex($gap: spacing(4));
 
             strong {
-                @include font(base, base, 600);
+                @include font(base, 600);
                 color: c(primary);
             }
             em {
@@ -52,7 +52,7 @@
     }
 
     &__text {
-        @include font(base, base, 400);
+        @include font(base, 400);
         color: c(gray, 700);
         white-space: nowrap;
     }

@@ -131,19 +131,14 @@ export const staggerWrapDetails = {
 export const fadeUpItem = {
   initial: {
     opacity: 0,
-    y: 15
+    y: 30,
   },
   animate: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
-      ease: [
-        0.25,
-        1,
-        0.5,
-        1
-      ]
+      duration: 0.4,
+      ease: [0.16, 1, 0.3, 1]
     }
   }
 };

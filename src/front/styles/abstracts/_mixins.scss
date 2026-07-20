@@ -115,7 +115,7 @@
 }
 
 // TYPOGRAPHY
-@mixin font($family, $size, $weight: 400, $line: base, $letter: base) {
+@mixin font($family: base, $size: base, $weight: 400, $line: base, $letter: base) {
     font-family: map.get($ff, $family);
     font-size: map.get($fs, $size);
     line-height: map.get($lh, $line);

@@ -1,2 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@100;200;300;400;500;600&display=swap');
-@import url('//cdn.jsdelivr.net/npm/font-kopubworld@1.0/dotum.min.css');
+@use '../abstracts/index' as *;
+
+/* Pretendard GOV */
+@font-face {
+    font-family: 'Pretendard GOV';
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+    src: url('/assets/fonts/PretendardGOV-Black.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Pretendard GOV';
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+    src: url('/assets/fonts/PretendardGOV-ExtraBold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Pretendard GOV';
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url('/assets/fonts/PretendardGOV-Bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Pretendard GOV';
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+    src: url('/assets/fonts/PretendardGOV-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Pretendard GOV';
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    src: url('/assets/fonts/PretendardGOV-Medium.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Pretendard GOV';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url('/assets/fonts/PretendardGOV-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Pretendard GOV';
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+    src: url('/assets/fonts/PretendardGOV-Light.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Pretendard GOV';
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+    src: url('/assets/fonts/PretendardGOV-ExtraLight.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Pretendard GOV';
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+    src: url('/assets/fonts/PretendardGOV-Thin.woff2') format('woff2');
+}

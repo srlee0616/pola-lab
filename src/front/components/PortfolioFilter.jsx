@@ -5,14 +5,7 @@ function PortfolioFilter({ categories, activeFilter, onFilterChange }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -20,26 +13,12 @@ function PortfolioFilter({ categories, activeFilter, onFilterChange }) {
   return (
     <header className={`portfolio-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="header-inner">
-        <h1
-          className="logo"
-          onClick={() => {
-            onFilterChange("ALL");
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        >
-          POLA LAB.
-        </h1>
+        <h1 className="logo" onClick={() => { onFilterChange("ALL"); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>POLA LAB.</h1>
         <div className="portfolio-filter">
           {categories.map((cat) => (
-            <button
-              key={cat}
-              className={`filter-btn ${activeFilter === cat ? 'is-active' : ''}`}
-              onClick={() => onFilterChange(cat)}
-            >
+            <button key={cat} className={`filter-btn ${activeFilter === cat ? 'is-active' : ''}`} onClick={() => onFilterChange(cat)}>
               {cat}
-              {activeFilter === cat && (
-                <motion.span layoutId="underline" className="underline" />
-              )}
+              {activeFilter === cat && <motion.span layoutId="underline" className="underline" />}
             </button>
           ))}
         </div>

@@ -21,7 +21,7 @@
         transition: padding 0.4s ease;
 
         .logo {
-            @include font(accent, lg, 800, none, title);
+            @include font(base, lg, 800, none, title);
             letter-spacing: -0.05em;
             cursor: pointer;
         }
@@ -45,7 +45,7 @@
     .filter-btn {
         position: relative;
         padding: spacing(2) 0;
-        @include font(accent, xs, 500, none, label);
+        @include font(base, xs, 500, none, label);
         text-transform: uppercase;
         color: $theme-text-dim;
         border: none;
